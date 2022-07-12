@@ -8,7 +8,7 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
-
+    
     
     @IBOutlet weak var addToFavoriteLbl: UILabel!
     @IBOutlet weak var movieTitle: UILabel!
@@ -28,6 +28,8 @@ class DetailsViewController: UIViewController {
         addToFavoriteLbl.isHidden = true
         super.viewDidLoad()
         movieDescription.text = movieDescriptionField
+        //ვერ ვხვდები რატომ არ მუშაობს ლეიბლი მრავალხაზზე, მითითებული მაქვს ხაზების რაოდენობა. 0 რომ მივუთითო მაინც არ მუშაობს
+        
         movieTitle.text = movieTitleField
         movieImdb.text = movieImdbField
         movieReleaseData.text = movieReleaseDataField
@@ -41,9 +43,9 @@ class DetailsViewController: UIViewController {
         print(favoriteMoviesArr)
     }
     
-
-
     
-
-
+    
+    
+    
+    
 }

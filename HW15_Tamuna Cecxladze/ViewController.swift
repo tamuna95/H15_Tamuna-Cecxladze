@@ -9,10 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
-
+    
     @IBOutlet weak var movieTableView: UITableView!
     var indexPathArr = [IndexPath]()
-
+    
     var moviesArr :[Movie] = [Movie(title: "Title1", releaseDate: "11.01.2010", imdb: 7.8, mainActor: "Actor1", seen: true, isFavourite: true),
                               Movie(title: "Title2", releaseDate: "20.03.2012", imdb: 8.9, mainActor: "Actor2", seen: false, isFavourite: false),
                               Movie(title: "Title3", releaseDate: "03.09.2020", imdb: 9.8, mainActor: "Actor3", seen: true, isFavourite: false),
@@ -27,13 +27,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     @IBAction func sortedBySeenMovies(_ sender: Any) {
         moviesArr.sort(by: { $0.seen && !$1.seen})
         print(moviesArr)
         self.movieTableView.reloadData()
     }
-
+    
     @IBAction func sortedByIsFavourite(_ sender: Any) {
         moviesArr.sort(by: { $0.isFavourite && !$1.isFavourite})
         print(moviesArr)
@@ -45,7 +45,7 @@ extension ViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         indexPathArr.append(indexPath)
         performSegue(withIdentifier: "DetailsViewController", sender: self)
-
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailsViewController" {
@@ -58,18 +58,15 @@ extension ViewController : UITableViewDelegate {
                 detailsVC.movieReleaseDataField = moviesArr[i.row].releaseDate
             }
         }
-
-       
-}
+    }
 }
 extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return moviesArr.count
-        } else if section == 1 {
+        }else if section == 1 {
             return seenFilmsArr.count
-        }
-        else {
+        }else {
             return notSeenFilmsArr.count
         }
     }
@@ -91,36 +88,41 @@ extension ViewController : UITableViewDataSource {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 30))
         let label = UILabel(frame: CGRect(x: 10, y: 0, width: 200, height: 30))
         header.addSubview(label)
+        header.backgroundColor = .orange
         if section == 0 {
             label.text = "ყველა ფილმი"
-}
-        else if section == 1 {
+            
+        }else if section == 1 {
             label.text = "ნანახი ფილმები"
-
-        }
-        else if section == 2 {
+            
+        }else if section == 2 {
             label.text = "სანახავი ფილმები"
         }
-        
         return header
     }
     
 }
+
+//ვერ გავმართე სექციაში დამატების ფუნქციონალი
 extension ViewController : ChangeSection {
     func MoveInSection(cell: MovieTableViewCell) {
         if let indexPath = movieTableView.indexPath(for: cell) {
             if moviesArr[indexPath.row].seen {
                 seenFilmsArr.append(moviesArr[indexPath.row])
                 print("print",moviesArr[indexPath.row])
-
+                self.movieTableView.reloadData()
+                
             }
             else {
                 notSeenFilmsArr.append(moviesArr[indexPath.row])
                 print(moviesArr[indexPath.row].seen)
+                self.movieTableView.reloadData()
+                
             }
-
+            
         }
     }
     
     
 }
+
